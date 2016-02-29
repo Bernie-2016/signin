@@ -13,7 +13,7 @@ Frontend to sign people in at Bernie events. React + React-Router + CoffeeScript
 
 1. Clone the repository (`git clone git@github.com:Bernie-2016/signin-frontend.git`)
 2. Install dependencies: `npm install`
-3. Run development server: `gulp serve` and open [http://localhost:9010](http://localhost:9010) (you'll also need to setup and run the [development server](https://github.com/Bernie-2016/signin-api))
+3. Run development server: `gulp serve` and open [http://localhost:8080](http://localhost:8080) (you'll also need to setup and run the [development server](https://github.com/Bernie-2016/signin-api))
 
 ### Deployment
 
