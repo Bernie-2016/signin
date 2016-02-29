@@ -1,7 +1,6 @@
-# bernie-tickets
+# signin-frontend
 
-Code for BernieTickets.com. React + React-Router + CoffeeScript + Firebase
-
+Frontend to sign people in at Bernie events. React + React-Router + CoffeeScript
 
 ## Development
 
@@ -12,15 +11,19 @@ Code for BernieTickets.com. React + React-Router + CoffeeScript + Firebase
 
 ### Setup
 
-1. Clone the repository (`git clone git@github.com:Bernie-2016/bernie-tickets.git`)
+1. Clone the repository (`git clone git@github.com:Bernie-2016/signin-frontend.git`)
 2. Install dependencies: `npm install`
-3. Run development server: `gulp serve` and open [http://localhost:9010](http://localhost:9010)
+3. Run development server: `gulp serve` and open [http://localhost:9010](http://localhost:9010) (you'll also need to setup and run the [development server](https://github.com/Bernie-2016/signin-api))
 
-To deploy, run `gulp firebase` (you also must be logged in to the Firebase CLI).
+### Deployment
+
+1. Add valid IAM credentials in `aws_credentials.json`.
+2. Run `npm run webpack` to generate production assets.
+3. Run `npm run deploy` to deploy.
 
 ## Contributing
 
-1. Fork it ( https://github.com/Bernie-2016/Teams/fork )
+1. Fork it ( https://github.com/Bernie-2016/signin-frontend/fork )
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)

@@ -1,9 +1,0 @@
-{
-  "firebase": "bernie-tickets",
-  "public": "dist",
-  "ignore": [
-    "firebase.json",
-    "**/.*",
-    "**/node_modules/**"
-  ]
-}

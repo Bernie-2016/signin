@@ -1,5 +1,5 @@
 {
-  "name": "bernie-tickets",
+  "name": "signin-frontend",
   "version": "1.0.0",
   "description": "Signup forms for Bernie 2016 events",
   "main": "index.js",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Bernie-2016/bernie-tickets.git"
+    "url": "git+https://github.com/Bernie-2016/signin-frontend.git"
   },
   "author": "Zach Schneider <zachschneider@berniesanders.com>",
   "license": "AGPL-3.0",
   "bugs": {
-    "url": "https://github.com/Bernie-2016/bernie-tickets/issues"
+    "url": "https://github.com/Bernie-2016/signin-frontend/issues"
   },
-  "homepage": "https://github.com/Bernie-2016/bernie-tickets#readme",
+  "homepage": "https://github.com/Bernie-2016/signin-frontend#readme",
   "devDependencies": {
     "bootstrap": "^3.3.6",
     "cjsx-loader": "^2.1.0",
@@ -30,8 +30,6 @@
     "css-loader": "^0.23.1",
     "file-loader": "^0.8.5",
     "fluxxor": "^1.7.3",
-    "gulp": "^3.9.0",
-    "gulp-shell": "^0.5.1",
     "history": "^1.13.1",
     "html-webpack-plugin": "^2.7.2",
     "jquery": "^2.1.4",
@@ -53,6 +51,7 @@
     "react-router": "^1.0.2",
     "reactable": "^0.12.3",
     "resolve-url-loader": "^1.4.3",
+    "s3": "^4.4.0",
     "sass-loader": "^3.1.2",
     "style-loader": "^0.13.0",
     "webpack": "^1.12.12",
