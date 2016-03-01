@@ -14,10 +14,9 @@ module.exports = (
   <Route component={App}>
     <Route component={Authenticated}>
       <Route path='/admin/events/new' component={AdminNewEvent} />
-      <Route path='/admin/events/campaign' component={AdminEvents} />
-      <Route path='/admin/events/internal' component={AdminEvents} />
       <Route path='/admin/events/:id/edit' component={AdminEditEvent} />
       <Route path='/admin/events/:id' component={AdminEvent} />
+      <Route path='/admin/events' component={AdminEvents} />
       <Route path='/admin' component={AdminEvents} />
     </Route>
 
