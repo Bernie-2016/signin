@@ -48,16 +48,10 @@ module.exports = React.createClass
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav>
-              <NavItem eventKey={1} href='/admin'>Forms</NavItem>
+              <NavItem eventKey={1} href='/admin'>Events</NavItem>
             </Nav>
-            {if @state.role is 'admin'
-              <Nav>
-                <NavItem eventKey={2} href='/admin/events/campaign'>Campaign Events</NavItem>
-                <NavItem eventKey={3} href='/admin/events/internal'>Internal Events</NavItem>
-              </Nav>
-            }
             <Nav pullRight>
-              <NavItem eventKey={4} onClick={@signOut} href='#'>Sign Out</NavItem>
+              <NavItem eventKey={2} onClick={@signOut} href='#'>Sign Out</NavItem>
             </Nav>
           </Navbar.Collapse>
         </Navbar>

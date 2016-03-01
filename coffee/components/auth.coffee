@@ -32,10 +32,8 @@ module.exports = React.createClass
     @history.pushState(null, '/admin') if @state.loggedIn
 
   render: ->
-    <div className={'forms-admin'}>
-      <form onSubmit={@handleSubmit}>
-        <a href='#' className='btn' onClick={@login}>
-          Login
-        </a>
-      </form>
-    </div>
+    <form onSubmit={@handleSubmit}>
+      <a href='#' className='btn' onClick={@login}>
+        Login
+      </a>
+    </form>

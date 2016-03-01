@@ -9,15 +9,15 @@ module.exports = Fluxxor.createStore
     @loaded = false
     @error = false
 
-    @bindActions(constants.ADMIN.FORM.LOAD, @onLoadForm)
-    @bindActions(constants.ADMIN.FORM.LOAD_SUCCESS, @onLoadFormSuccess)
-    @bindActions(constants.ADMIN.FORM.LOAD_FAILURE, @onLoadFormFailure)
+    @bindActions(constants.ADMIN.EVENT.LOAD, @onLoadEvent)
+    @bindActions(constants.ADMIN.EVENT.LOAD_SUCCESS, @onLoadEventSuccess)
+    @bindActions(constants.ADMIN.EVENT.LOAD_FAILURE, @onLoadEventFailure)
 
-  onLoadForm: ->
+  onLoadEvent: ->
     @loaded = false
     @emit('change')
 
-  onLoadFormSuccess: (response) ->
+  onLoadEventSuccess: (response) ->
     if response is null
       @error = true
     else
@@ -27,6 +27,6 @@ module.exports = Fluxxor.createStore
       @loaded = true
     @emit('change')
 
-  onLoadFormFailure: (response) ->
+  onLoadEventFailure: (response) ->
     @error = true
     @emit('change')

@@ -17,11 +17,11 @@ module.exports = Fluxxor.createStore
     @bindActions(constants.AUTH.LOGIN_SUCCESS, @onLoginSuccess)
     @bindActions(constants.AUTH.LOGIN_FAILURE, @onFailure)
     @bindActions(constants.AUTH.LOGOUT, @onLogout)
-    @bindActions(constants.ADMIN.FORM.LOAD_FAILURE, @onFailure)
-    @bindActions(constants.ADMIN.FORMS.LOAD_FAILURE, @onFailure)
-    @bindActions(constants.ADMIN.FORMS.CREATE_FAILURE, @onFailure)
-    @bindActions(constants.ADMIN.FORM.UPDATE_FAILURE, @onFailure)
-    @bindActions(constants.ADMIN.FORM.DESTROY_FAILURE, @onFailure)
+    @bindActions(constants.ADMIN.EVENT.LOAD_FAILURE, @onFailure)
+    @bindActions(constants.ADMIN.EVENTS.LOAD_FAILURE, @onFailure)
+    @bindActions(constants.ADMIN.EVENTS.CREATE_FAILURE, @onFailure)
+    @bindActions(constants.ADMIN.EVENTS.UPDATE_FAILURE, @onFailure)
+    @bindActions(constants.ADMIN.EVENTS.DESTROY_FAILURE, @onFailure)
 
   onLoginSuccess: (response) ->
     @loggedIn = true

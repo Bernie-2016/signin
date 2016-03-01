@@ -7,20 +7,21 @@ import $           from 'jquery'
 import MaskedInput from 'components/maskedInput'
 
 module.exports = React.createClass
-  displayName: 'Form'
+  displayName: 'Event'
 
-  mixins: [Fluxxor.FluxMixin(React), Fluxxor.StoreWatchMixin('FormStore')]
+  mixins: [Fluxxor.FluxMixin(React), Fluxxor.StoreWatchMixin('EventStore')]
 
   contextTypes:
     router: React.PropTypes.func
 
   getStateFromFlux: ->
-    store = @props.flux.store('FormStore')
+    store = @props.flux.store('EventStore')
 
     {
       id: store.id
       title: store.title
       fields: store.fields || []
+      eventId: store.event_id
       loaded: store.loaded
       error: store.error
       view: 'FORM'
@@ -34,7 +35,7 @@ module.exports = React.createClass
       email: ''
       zip: ''
       canText: false
-      fieldValues: []
+      fieldValues: id: f.id, value: (if f.type is 'checkbox' then false else null) for f in store.fields || []
     }
 
   checkEmail: (e) ->
@@ -57,16 +58,20 @@ module.exports = React.createClass
   setField: (e) ->
     id = $(e.target).data('id')
     fieldIndex = _.findIndex(@state.fieldValues, id: parseInt(id))
-    if fieldIndex isnt -1
-      field = @state.fieldValues[fieldIndex]
-      field.value = e.target.value
-      @setState(fieldValues: @state.fieldValues.splice(fieldIndex, 1, field))
-    else
-      @setState(fieldValues: @state.fieldValues.concat(id: id, value: e.target.value))
+    field = @state.fieldValues[fieldIndex]
+    field.value = e.target.value
+    @setState(fieldValues: @state.fieldValues.splice(fieldIndex, 1, field))
+
+  setCheck: (e) ->
+    id = $(e.target).data('id')
+    fieldIndex = _.findIndex(@state.fieldValues, id: parseInt(id))
+    field = @state.fieldValues[fieldIndex]
+    field.value = $(e.target).is(':checked')
+    @setState(fieldValues: @state.fieldValues.splice(fieldIndex, 1, field))
 
   componentDidMount: ->
     if @props.params.slug
-      @props.flux.actions.admin.form.load(
+      @props.flux.actions.admin.event.load(
         slug: @props.params.slug
         @props.flux.store('AuthStore').authToken
       )
@@ -82,6 +87,12 @@ module.exports = React.createClass
       $('input:invalid').addClass('invalid')
       return
 
+    extraFields = @state.fieldValues.map (field) ->
+      {
+        question_id: field.id
+        response: field.value
+      }
+
     data =
       first_name: @state.firstName
       last_name: @state.lastName
@@ -89,8 +100,7 @@ module.exports = React.createClass
       email: @state.email
       zip: @state.zip
       canText: @state.canText
-      form_id: @state.id
-      extra_fields: @state.fieldValues
+      extra_fields: [event_id: @state.eventId, questions: extraFields]
 
     # Stringify basic fields.
     allFields = [
@@ -103,12 +113,11 @@ module.exports = React.createClass
       'extra_fields'
     ]
     string = JSON.stringify(allFields.map( (key) -> data[key] )).slice(1, -1)
-    canvas = $('canvas')[0]
-    @setState(view: 'TICKET', qrString: string, dataUrl: canvas.toDataURL())
+    @setState(view: 'TICKET', qrString: string)
 
   onPrint: (e) ->
     e.preventDefault()
-    windowContent = "<html><body><img src='#{@state.dataUrl}' style='width: 400px;' /></body></html>"
+    windowContent = "<html><body><img src='#{$('canvas')[0].toDataURL()}' style='width: 400px;' /></body></html>"
     printWin = window.open()
     printWin.document.open()
     printWin.document.write(windowContent)
@@ -116,6 +125,9 @@ module.exports = React.createClass
     printWin.focus()
     printWin.print()
     printWin.close()
+
+  download: (e) ->
+    e.target.href = $('canvas')[0].toDataURL()
 
   render: ->
     <div>
@@ -126,7 +138,7 @@ module.exports = React.createClass
         <hr />
         {if @state.error
           <p className='no-form'>
-            No form exists at this URL -- please double-check spelling or contact event staff.
+            No event exists at this URL -- please double-check spelling or contact event staff.
           </p>
         else
           <form className='signup'>
@@ -159,7 +171,7 @@ module.exports = React.createClass
 
             {for field in @state.fields when field.type is 'checkbox'
               <div className='checkboxgroup' key={field.id}>
-                <Input type='checkbox' data-id={field.id} onChange={@setField} checked={(_.find(@state.fieldValues, id: parseInt(field.id)) || {}).value} />
+                <Input type='checkbox' data-id={field.id} onChange={@setCheck} checked={(_.find(@state.fieldValues, id: parseInt(field.id)) || {}).value} />
                 <label className='checkbox-label'>
                   {field.title}
                 </label>
@@ -178,7 +190,7 @@ module.exports = React.createClass
         <a className='btn block' onClick={@onPrint}>
           Print
         </a><br />
-        <a href={@state.dataUrl} className='btn block' download='ticket.png'>
+        <a onClick={@download} className='btn block' download='ticket.png'>
           Save
         </a>
       </section>
