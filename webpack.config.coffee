@@ -30,6 +30,10 @@ module.exports =
         test: /\.(eot|woff2|woff|svg|ttf|otf|png|ico)$/
         loaders: ['file']
       }
+      {
+        test: /\.json$/
+        loaders: ['json']
+      }
     ]
 
   plugins: [
@@ -51,4 +55,4 @@ module.exports =
 
   resolve:
     root: [path.resolve('./coffee'), path.resolve('./')]
-    extensions: ['', '.js', '.coffee', '.scss', '.css', '.svg']
+    extensions: ['', '.js', '.coffee', '.scss', '.css', '.svg', '.json']

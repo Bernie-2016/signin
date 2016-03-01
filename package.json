@@ -34,6 +34,7 @@
     "history": "^1.13.1",
     "html-webpack-plugin": "^2.7.2",
     "jquery": "^2.1.4",
+    "json-loader": "^0.5.4",
     "lodash": "^3.10.1",
     "mailcheck": "^1.1.1",
     "moment": "^2.11.2",

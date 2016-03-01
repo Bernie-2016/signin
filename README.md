@@ -17,7 +17,7 @@ Frontend to sign people in at Bernie events. React + React-Router + CoffeeScript
 
 ### Deployment
 
-1. Add valid IAM credentials in `aws_credentials.json`.
+1. Add valid IAM credentials in `credentials.json`.
 2. Run `npm run webpack` to generate production assets.
 3. Run `npm run deploy` to deploy.
 

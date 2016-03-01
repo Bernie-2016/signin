@@ -18,7 +18,7 @@ module.exports = React.createClass
   login: ->
     params = query.stringify(
       response_type: 'token'
-      client_id: '460408574804-mlgtiucon06jaadqpltkf36u21hvku9b.apps.googleusercontent.com'
+      client_id: if __PROD__ then '460408574804-mlgtiucon06jaadqpltkf36u21hvku9b.apps.googleusercontent.com' else require('credentials').googleKey
       scope: 'profile email'
       redirect_uri: if __PROD__ then 'https://signin.berniesanders.com/callback' else 'http://localhost:8080/callback'
     )
