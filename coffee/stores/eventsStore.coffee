@@ -1,4 +1,5 @@
 import Fluxxor   from 'fluxxor'
+import noty      from 'noty'
 import _         from 'lodash'
 import constants from 'constants/all'
 
@@ -16,16 +17,31 @@ module.exports = Fluxxor.createStore
     @bindActions(constants.ADMIN.EVENTS.LOAD_FAILURE, @onFailure)
     @bindActions(constants.ADMIN.EVENTS.CREATE, @onCreateEvent)
     @bindActions(constants.ADMIN.EVENTS.CREATE_SUCCESS, @onCreateEventSuccess)
-    @bindActions(constants.ADMIN.EVENTS.CREATE_FAILURE, @onFailure)
+    @bindActions(constants.ADMIN.EVENTS.CREATE_FAILURE, @onFormFailure)
     @bindActions(constants.ADMIN.EVENTS.UPDATE, @onUpdateEvent)
     @bindActions(constants.ADMIN.EVENTS.UPDATE_SUCCESS, @onUpdateEventSuccess)
-    @bindActions(constants.ADMIN.EVENTS.UPDATE_FAILURE, @onFailure)
+    @bindActions(constants.ADMIN.EVENTS.UPDATE_FAILURE, @onFormFailure)
     @bindActions(constants.ADMIN.EVENTS.DESTROY, @onDestroyEvent)
     @bindActions(constants.ADMIN.EVENTS.DESTROY_SUCCESS, @onDestroyEventSuccess)
     @bindActions(constants.ADMIN.EVENTS.DESTROY_FAILURE, @onFailure)
 
   onFailure: (response) ->
     @error = true
+    @emit('change')
+
+  onFormFailure: (response) ->
+    @error = true
+    @loaded = true
+    msgs = []
+    for field, error of response
+      msgs.push [field, error].join(' ')
+    noty(
+      theme: 'relax'
+      text: "Error: #{msgs.join('; ')}"
+      layout: 'topRight'
+      type: 'error'
+      timeout: 3000
+    )
     @emit('change')
 
   onLoadEvents: ->

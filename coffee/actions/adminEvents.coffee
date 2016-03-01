@@ -20,7 +20,7 @@ module.exports =
       @dispatch(constants.ADMIN.EVENTS.CREATE_SUCCESS, response)
 
     failure = (response) =>
-      @dispatch(constants.ADMIN.EVENTS.CREATE_FAILURE, response)
+      @dispatch(constants.ADMIN.EVENTS.CREATE_FAILURE, JSON.parse(response.responseText))
 
     Client.post('/events', payload.authToken, payload.data, success, failure)
 
@@ -31,7 +31,7 @@ module.exports =
       @dispatch(constants.ADMIN.EVENTS.UPDATE_SUCCESS, response)
 
     failure = (response) =>
-      @dispatch(constants.ADMIN.EVENTS.UPDATE_FAILURE, response)
+      @dispatch(constants.ADMIN.EVENTS.UPDATE_FAILURE, JSON.parse(response.responseText))
 
     Client.put("/events/#{payload.id}", payload.authToken, payload.data, success, failure)
 

@@ -40,7 +40,7 @@ module.exports = Fluxxor.createStore
     @emit('change')
 
   onFailure: (response) ->
-    return unless response.responseJSON.error is 'bad_token'
+    return unless response.responseJSON && response.responseJSON.error is 'bad_token'
     @logout = true
     @emit('change')
     @logout = false
