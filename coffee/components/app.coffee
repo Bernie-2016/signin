@@ -1,6 +1,5 @@
 import React from 'react'
 
-require('bootstrap/dist/css/bootstrap')
 require('scss/app')
 
 module.exports = React.createClass
@@ -9,7 +8,7 @@ module.exports = React.createClass
   render: ->
     <div>
       <div className={'img-wrapper'}>
-        <img className={'logo'} src={'/img/logo.png'} alt={'Bernie 2016'} />
+        <img className={'logo'} src={require('img/logo.png')} alt={'Bernie 2016'} />
       </div>
       <div className='container top-container'>
         {@props.children}

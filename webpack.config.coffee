@@ -32,22 +32,22 @@ module.exports =
       }
     ]
 
-   plugins: [
-      new HtmlWebpackPlugin(
-        template: 'index.html'
-        minify:
-          collapseWhitespace: true
-      )
-      new CopyWebpackPlugin([
-        {
-          from: 'img/favicon.ico'
-          to: 'favicon.ico'
-        }
-      ])
-      new webpack.DefinePlugin(
-        __PROD__: process.env.BUILD_PROD is 'true'
-      )
-    ]
+  plugins: [
+    new HtmlWebpackPlugin(
+      template: 'index.html'
+      minify:
+        collapseWhitespace: true
+    )
+    new CopyWebpackPlugin([
+      {
+        from: 'img/favicon.ico'
+        to: 'favicon.ico'
+      }
+    ])
+    new webpack.DefinePlugin(
+      __PROD__: process.env.BUILD_PROD is 'true'
+    )
+  ]
 
   resolve:
     root: [path.resolve('./coffee'), path.resolve('./')]
