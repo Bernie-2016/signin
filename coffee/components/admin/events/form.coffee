@@ -40,7 +40,7 @@ module.exports = React.createClass
       <label className='control-label'>Date</label>
       <DatePicker inputFormat='MM/DD/YYYY' format='YYYY-MM-DD' dateTime={@props.date} onChange={ (value) => @props.set(date: moment(value)) } />
       <br />
-      <Input type='text' label='Slug' placeholder='Event slug' value={@props.slug} onChange={ (e) => @props.set(slug: e.target.value) } addonBefore='https://bernietickets.com/' />
+      <Input type='text' label='Slug' placeholder='Event slug' value={@props.slug} onChange={ (e) => @props.set(slug: e.target.value) } addonBefore='https://signin.berniesanders.com/' />
       <label className='control-label'>Custom Fields</label>
       {for question, index in @props.questions
         <Row key={question.id || question.rid}>
