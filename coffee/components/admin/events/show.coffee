@@ -51,7 +51,7 @@ module.exports = React.createClass
     @history.pushState(null, '/admin/events') if @state.destroyedId
 
   render: ->
-    <Loader loaded={@state.loaded}>
+    <Loader loaded={@state.loaded} top='35%'>
       <h1>{@state.name}</h1>
       <h3>{@state.date.format('MM/DD/YYYY')}</h3>
       <h4>Signups: {@state.signupsCount}</h4>

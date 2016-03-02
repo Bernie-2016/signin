@@ -53,7 +53,7 @@ module.exports = React.createClass
     @history.pushState(null, "/admin/events/#{@state.updatedId}") if @state.updatedId
 
   render: ->
-    <Loader loaded={@state.loaded}>
+    <Loader loaded={@state.loaded} top='35%'>
       <Row>
         <Col md={6} xs={12}>
           <h1>Edit Event</h1>

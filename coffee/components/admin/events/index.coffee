@@ -34,7 +34,7 @@ module.exports = React.createClass
       )
 
   render: ->
-    <Loader loaded={@state.loaded}>
+    <Loader loaded={@state.loaded} top='35%'>
       <Link to={'/admin/events/new'} className='btn'>New Event</Link>
       <Table className='table table-striped' filterable={['name']} noDataText='No events.'>
         <Thead>
