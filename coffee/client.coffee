@@ -1,6 +1,6 @@
 import $ from 'jquery'
 
-host = if __PROD__ then 'https://signin-api.berniesanders.com' else 'http://localhost:3000'
+host = if __PROD__ then 'https://signin-api.herokuapp.com' else 'http://localhost:3000'
 
 module.exports = 
   request: (path, method, token, data, success, failure) ->
