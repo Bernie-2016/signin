@@ -21,7 +21,6 @@ module.exports = React.createClass
       id: store.id
       title: store.title
       fields: store.fields || []
-      eventId: store.event_id
       loaded: store.loaded
       error: store.error
       view: 'FORM'
@@ -100,7 +99,8 @@ module.exports = React.createClass
       email: @state.email
       zip: @state.zip
       canText: @state.canText
-      extra_fields: [event_id: @state.eventId, questions: extraFields]
+      extra_fields: [event_id: @state.id, questions: extraFields]
+    console.log data.extra_fields
 
     # Stringify basic fields.
     allFields = [
