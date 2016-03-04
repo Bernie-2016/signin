@@ -34,7 +34,7 @@ module.exports = React.createClass
       email: ''
       zip: ''
       canText: false
-      fieldValues: id: f.id, value: (if f.type is 'checkbox' then false else null) for f in store.fields || []
+      fieldValues: (id: f.id, value: (if f.type is 'checkbox' then false else null) for f in store.fields || [])
     }
 
   checkEmail: (e) ->
@@ -56,17 +56,15 @@ module.exports = React.createClass
 
   setField: (e) ->
     id = $(e.target).data('id')
-    fieldIndex = _.findIndex(@state.fieldValues, id: parseInt(id))
-    field = @state.fieldValues[fieldIndex]
+    field = _.find(@state.fieldValues, id: parseInt(id))
     field.value = e.target.value
-    @setState(fieldValues: @state.fieldValues.splice(fieldIndex, 1, field))
+    @setState(fieldValues: @state.fieldValues)
 
   setCheck: (e) ->
     id = $(e.target).data('id')
-    fieldIndex = _.findIndex(@state.fieldValues, id: parseInt(id))
-    field = @state.fieldValues[fieldIndex]
+    field = _.find(@state.fieldValues, id: parseInt(id))
     field.value = $(e.target).is(':checked')
-    @setState(fieldValues: @state.fieldValues.splice(fieldIndex, 1, field))
+    @setState(fieldValues: @state.fieldValues)
 
   componentDidMount: ->
     if @props.params.slug
@@ -91,6 +89,7 @@ module.exports = React.createClass
         question_id: field.id
         response: field.value
       }
+    console.log extraFields
 
     data =
       first_name: @state.firstName
