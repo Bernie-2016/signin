@@ -48,7 +48,7 @@ module.exports = React.createClass
             <Input type='text' label='Field title' placeholder='Field title' value={question.title} data-index={index} onChange={@setQuestionTitle} />
           </Col>
           <Col xs={5}>
-            <Input type='select' label='Field type' data-index={index} onChange={@setQuestionType}>
+            <Input type='select' label='Field type' data-index={index} value={question.type} onChange={@setQuestionType}>
               <option value='text'>Text</option>
               <option value='checkbox'>Checkbox</option>
             </Input>
