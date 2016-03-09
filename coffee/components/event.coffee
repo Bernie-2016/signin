@@ -5,6 +5,7 @@ import Mailcheck   from 'mailcheck'
 import QRCode      from 'qrcode.react'
 import $           from 'jquery'
 import MaskedInput from 'components/maskedInput'
+import Client      from 'client'
 
 module.exports = React.createClass
   displayName: 'Event'
@@ -96,8 +97,12 @@ module.exports = React.createClass
       phone: @state.phone
       email: @state.email
       zip: @state.zip
-      canText: @state.canText
-      extra_fields: [event_id: @state.id, questions: extraFields]
+      can_text: @state.canText
+      extra_fields: JSON.stringify([event_id: @state.id, questions: extraFields])
+
+    Client.post('/signups', null, signups: [data])
+
+    data.extra_fields = extra_fields: [event_id: @state.id, questions: extraFields]
 
     # Stringify basic fields.
     allFields = [
@@ -106,7 +111,7 @@ module.exports = React.createClass
       'phone'
       'email'
       'zip'
-      'canText'
+      'can_text'
       'extra_fields'
     ]
     string = JSON.stringify(allFields.map( (key) -> data[key] )).slice(1, -1)
