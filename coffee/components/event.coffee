@@ -89,7 +89,6 @@ module.exports = React.createClass
         question_id: field.id
         response: field.value
       }
-    console.log extraFields
 
     data =
       first_name: @state.firstName
@@ -99,7 +98,6 @@ module.exports = React.createClass
       zip: @state.zip
       canText: @state.canText
       extra_fields: [event_id: @state.id, questions: extraFields]
-    console.log data.extra_fields
 
     # Stringify basic fields.
     allFields = [
