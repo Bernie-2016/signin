@@ -79,12 +79,6 @@ module.exports = React.createClass
   submitForm: (e) ->
     e.preventDefault()
 
-    unless $('form').checkValidity() || typeof(document.createElement('input').checkValidity) isnt 'function'
-      alert 'Please complete all required fields.'
-      $('input').removeClass('invalid')
-      $('input:invalid').addClass('invalid')
-      return
-
     extraFields = @state.fieldValues.map (field) ->
       {
         question_id: field.id
