@@ -102,7 +102,7 @@ module.exports = React.createClass
 
     Client.post('/signups', null, signups: [data])
 
-    data.extra_fields = extra_fields: [event_id: @state.id, questions: extraFields]
+    data.extra_fields = [event_id: @state.id, questions: extraFields]
 
     # Stringify basic fields.
     allFields = [
