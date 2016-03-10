@@ -106,7 +106,7 @@ section.form {
     margin-bottom: 0px;
   }
 
-  p.no-form {
+  p.early-access, p.no-form {
     padding-top: 15px;
     padding-left: 25px;
     padding-right: 25px;
@@ -198,6 +198,11 @@ section.ticket {
     margin: 0px 0px 0.2em;
     text-align: center;
     padding: 0px 0px 0.5rem;
+
+    &.early {
+      color: $orange;
+      margin-bottom: 0px;
+    }
   }
 }
 

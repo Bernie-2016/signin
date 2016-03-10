@@ -20,6 +20,7 @@ module.exports = React.createClass
       name: evt.name
       date: moment(evt.date)
       slug: evt.slug
+      earlyAccess: evt.early_access
       fields: evt.questions || []
       signupsCount: evt.signups_count
       loaded: store.loaded
@@ -62,12 +63,12 @@ module.exports = React.createClass
         <a href='#' onClick={@downloadCsv}>Download CSV</a>
       </p>
       
-      {if _.isEmpty(@state.fields)
+      {if _.isEmpty(_.reject(@state.fields, type: 'gotv'))
         <h4>No custom fields</h4>
       else
         <h4>Fields:</h4>
       }
-      {for field in @state.fields
+      {for field in @state.fields when field.type isnt 'gotv'
         <div key={field.id}>
           <p>
             <strong>Title:</strong> {field.title}
@@ -76,6 +77,19 @@ module.exports = React.createClass
             <strong>Type:</strong> {field.type}
           </p>
           <hr />
+        </div>
+      }
+      {if @state.earlyAccess
+        <div>
+          <h4>Early Access Shifts:</h4>
+          {for field in @state.fields when field.type is 'gotv'
+            <div key={field.id}>
+              <p>
+                <strong>Shift:</strong> {field.title}
+              </p>
+              <hr />
+            </div>
+          }
         </div>
       }
       <Link to={"/admin/events/#{@props.params.id}/edit"} className='btn'>

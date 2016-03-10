@@ -21,6 +21,7 @@ module.exports = React.createClass
     {
       id: store.id
       title: store.title
+      earlyAccess: store.earlyAccess
       fields: store.fields || []
       loaded: store.loaded
       error: store.error
@@ -28,6 +29,7 @@ module.exports = React.createClass
       suggestion: {}
       showSuggestion: false
       form: false
+      accessGranted: false
       qrString: ''
       firstName: ''
       lastName: ''
@@ -98,6 +100,11 @@ module.exports = React.createClass
 
     data.extra_fields = [event_id: @state.id, questions: extraFields]
 
+    accessGranted = false
+    if @state.earlyAccess
+      for field in @state.fields when field.type is 'gotv'
+        accessGranted = true if (_.find(@state.fieldValues, id: parseInt(field.id)) || {}).value
+
     # Stringify basic fields.
     allFields = [
       'first_name'
@@ -109,21 +116,7 @@ module.exports = React.createClass
       'extra_fields'
     ]
     string = JSON.stringify(allFields.map( (key) -> data[key] )).slice(1, -1)
-    @setState(view: 'TICKET', qrString: string)
-
-  onPrint: (e) ->
-    e.preventDefault()
-    windowContent = "<html><body><img src='#{$('canvas')[0].toDataURL()}' style='width: 400px;' /></body></html>"
-    printWin = window.open()
-    printWin.document.open()
-    printWin.document.write(windowContent)
-    printWin.document.close()
-    printWin.focus()
-    printWin.print()
-    printWin.close()
-
-  download: (e) ->
-    e.target.href = $('canvas')[0].toDataURL()
+    @setState(view: 'TICKET', qrString: string, accessGranted: accessGranted)
 
   render: ->
     <div>
@@ -174,6 +167,25 @@ module.exports = React.createClass
               </div>
             }
 
+            {if @state.earlyAccess
+              <div>
+                <br />
+                <h2>Early Access</h2>
+                <hr />
+                <p className='early-access'>
+                  Want early access to the event? Just sign up for one or more volunteer shifts to help get out the vote for Bernie!
+                </p>
+                {for field in @state.fields when field.type is 'gotv'
+                  <div className='checkboxgroup' key={field.id}>
+                    <Input type='checkbox' data-id={field.id} onChange={@setCheck} checked={(_.find(@state.fieldValues, id: parseInt(field.id)) || {}).value} />
+                    <label className='checkbox-label'>
+                      {field.title}
+                    </label>
+                  </div>
+                }
+              </div>
+            }
+
             <a href='#' className='btn block' onClick={@submitForm}>Sign Up</a>
           </form>
         }
@@ -182,12 +194,9 @@ module.exports = React.createClass
       <section className={"ticket #{'hidden' unless @state.view is 'TICKET'}"}>
         <h2>Bernie 2016</h2>
         <QRCode value={@state.qrString} size={300} fgColor='#147FD7' />
+        {if @state.accessGranted
+          <h2 className='early'>Early Access</h2>
+        }
         <h2>Event Ticket</h2>
-        <a className='btn block' onClick={@onPrint}>
-          Print
-        </a><br />
-        <a onClick={@download} className='btn block' download='ticket.png'>
-          Save
-        </a>
       </section>
     </div>

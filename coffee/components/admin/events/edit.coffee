@@ -23,6 +23,7 @@ module.exports = React.createClass
       name: evt.name
       date: if evt.date then moment(evt.date) else moment()
       slug: evt.slug
+      earlyAccess: evt.early_access
       questions: evt.questions || []
       loaded: store.loaded
       error: store.error
@@ -43,6 +44,7 @@ module.exports = React.createClass
           name: @state.name
           date: @state.date.toISOString()
           slug: @state.slug
+          early_access: @state.earlyAccess
           questions_attributes: @state.questions
     )
 
@@ -57,7 +59,7 @@ module.exports = React.createClass
       <Row>
         <Col md={6} xs={12}>
           <h1>Edit Event</h1>
-          <Form name={@state.name} date={@state.date.format('YYYY-MM-DD')} slug={@state.slug} questions={@state.questions} set={@set} submit={@submit} submitText='Update Event' /> 
+          <Form name={@state.name} date={@state.date.format('YYYY-MM-DD')} slug={@state.slug} earlyAccess={@state.earlyAccess} questions={@state.questions} set={@set} submit={@submit} submitText='Update Event' /> 
         </Col>
       </Row>
     </Loader>
