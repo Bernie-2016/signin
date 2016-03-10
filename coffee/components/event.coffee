@@ -79,7 +79,7 @@ module.exports = React.createClass
   submitForm: (e) ->
     e.preventDefault()
 
-    unless $('form').is(':valid') || typeof(document.createElement('input').checkValidity) isnt 'function'
+    unless $('form').checkValidity() || typeof(document.createElement('input').checkValidity) isnt 'function'
       alert 'Please complete all required fields.'
       $('input').removeClass('invalid')
       $('input:invalid').addClass('invalid')
