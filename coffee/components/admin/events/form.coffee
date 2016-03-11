@@ -73,6 +73,11 @@ module.exports = React.createClass
       <Input type='checkbox' label='Early Access for Volunteers' onChange={ (e) => @props.set(earlyAccess: $(e.target).is(':checked')) } checked={@props.earlyAccess} />
       {if @props.earlyAccess
         <div>
+          <Input type='select' label='Event color' value={@props.color} onChange={ (e) => @props.set(color: e.target.value) } >
+            <option value='#EA504E'>Orange</option>
+            <option value='#45D363'>Green</option>
+            <option value='#551A8B'>Purple</option>
+          </Input>
           {for question, index in @props.questions when question.type is 'gotv'
             <Row key={question.id || question.rid}>
               <Col xs={10}>

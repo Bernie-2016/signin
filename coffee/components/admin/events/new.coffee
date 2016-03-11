@@ -17,6 +17,7 @@ module.exports = React.createClass
       title: ''
       date: moment()
       slug: ''
+      color: '#EA504E'
       earlyAccess: false
       questions: []
       error: store.error
@@ -35,6 +36,7 @@ module.exports = React.createClass
           name: @state.name
           date: new Date(@state.date).toISOString()
           slug: @state.slug
+          color: @state.color
           early_access: @state.earlyAccess
           questions_attributes: @state.questions
     )

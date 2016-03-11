@@ -23,6 +23,7 @@ module.exports = React.createClass
       name: evt.name
       date: if evt.date then moment(evt.date) else moment()
       slug: evt.slug
+      color: evt.color
       earlyAccess: evt.early_access
       questions: evt.questions || []
       loaded: store.loaded
@@ -44,6 +45,7 @@ module.exports = React.createClass
           name: @state.name
           date: @state.date.toISOString()
           slug: @state.slug
+          color: @state.color || '#EA504E'
           early_access: @state.earlyAccess
           questions_attributes: @state.questions
     )
