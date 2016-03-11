@@ -61,7 +61,7 @@ module.exports = React.createClass
       <Row>
         <Col md={6} xs={12}>
           <h1>Edit Event</h1>
-          <Form name={@state.name} date={@state.date.format('YYYY-MM-DD')} slug={@state.slug} earlyAccess={@state.earlyAccess} questions={@state.questions} set={@set} submit={@submit} submitText='Update Event' /> 
+          <Form name={@state.name} date={@state.date.format('YYYY-MM-DD')} slug={@state.slug} color={@state.color} earlyAccess={@state.earlyAccess} questions={@state.questions} set={@set} submit={@submit} submitText='Update Event' /> 
         </Col>
       </Row>
     </Loader>
