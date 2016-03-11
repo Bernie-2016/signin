@@ -132,24 +132,28 @@ module.exports = React.createClass
     qrImage = new Image()
     qrImage.src = string
     qrImage.onload = =>
-      context.drawImage(qrImage, 0, 50)
+      context.drawImage(qrImage, 0, 50, 300, 300)
 
       context.font = '40px jubilat'
       context.fillStyle = '#147FD7'
-      context.fillText('Bernie 2016', 45, 50)
+      context.textAlign = 'center'
+      context.fillText('Bernie 2016', 150, 50)
 
       if accessGranted
         context.font = '40px jubilat'
         context.fillStyle = @state.color || '#EA504E'
-        context.fillText('Early Access', 35, 385)
+        context.textAlign = 'center'
+        context.fillText('Early Access', 150, 385)
 
         context.font = '40px jubilat'
         context.fillStyle = '#147FD7'
-        context.fillText('Event Code', 45, 430)
+        context.textAlign = 'center'
+        context.fillText('Event Code', 150, 430)
       else
         context.font = '40px jubilat'
         context.fillStyle = '#147FD7'
-        context.fillText('Event Code', 45, 385)
+        context.textAlign = 'center'
+        context.fillText('Event Code', 150, 385)
 
       @setState(view: 'TICKET', ticketImg: canvas.toDataURL())
 
