@@ -1,8 +1,8 @@
 import React       from 'react'
 import Fluxxor     from 'fluxxor'
 import { Input }   from 'react-bootstrap'
+import qr          from 'qruri'
 import Mailcheck   from 'mailcheck'
-import QRCode      from 'qrcode.react'
 import $           from 'jquery'
 import MaskedInput from 'components/maskedInput'
 import Client      from 'client'
@@ -21,6 +21,7 @@ module.exports = React.createClass
     {
       id: store.id
       title: store.title
+      color: store.color
       earlyAccess: store.earlyAccess
       fields: store.fields || []
       loaded: store.loaded
@@ -29,8 +30,7 @@ module.exports = React.createClass
       suggestion: {}
       showSuggestion: false
       form: false
-      accessGranted: false
-      qrString: ''
+      ticketImg: ''
       firstName: ''
       lastName: ''
       phone: ''
@@ -116,7 +116,56 @@ module.exports = React.createClass
       'extra_fields'
     ]
     string = JSON.stringify(allFields.map( (key) -> data[key] )).slice(1, -1)
-    @setState(view: 'TICKET', qrString: string, accessGranted: accessGranted)
+    string = qr(string, fill: '#147FD7')
+
+    canvas = document.createElement('canvas')
+    canvas.width = 300
+    if accessGranted
+      canvas.height = 450
+    else
+      canvas.height = 400
+
+    context = canvas.getContext('2d')
+    context.fillStyle = 'white'
+    context.fillRect(0, 0, canvas.width, canvas.height)
+
+    qrImage = new Image()
+    qrImage.src = string
+    qrImage.onload = =>
+      context.drawImage(qrImage, 0, 50)
+
+      context.font = '40px jubilat'
+      context.fillStyle = '#147FD7'
+      context.fillText('Bernie 2016', 45, 50)
+
+      if accessGranted
+        context.font = '40px jubilat'
+        context.fillStyle = @state.color || '#EA504E'
+        context.fillText('Early Access', 35, 385)
+
+        context.font = '40px jubilat'
+        context.fillStyle = '#147FD7'
+        context.fillText('Event Code', 45, 430)
+      else
+        context.font = '40px jubilat'
+        context.fillStyle = '#147FD7'
+        context.fillText('Event Code', 45, 385)
+
+      @setState(view: 'TICKET', ticketImg: canvas.toDataURL())
+
+  onPrint: (e) ->
+    e.preventDefault()
+    windowContent = "<html><body><img src='#{@state.ticketImg}' style='width: 400px;' /></body></html>"
+    printWin = window.open()
+    printWin.document.open()
+    printWin.document.write(windowContent)
+    printWin.document.close()
+    printWin.focus()
+    printWin.print()
+    printWin.close()
+
+  download: (e) ->
+    e.target.href = @state.ticketImg
 
   render: ->
     <div>
@@ -183,6 +232,7 @@ module.exports = React.createClass
                     </label>
                   </div>
                 }
+                <br />
               </div>
             }
 
@@ -192,11 +242,12 @@ module.exports = React.createClass
       </section>
 
       <section className={"ticket #{'hidden' unless @state.view is 'TICKET'}"}>
-        <h2>Bernie 2016</h2>
-        <QRCode value={@state.qrString} size={300} fgColor='#147FD7' />
-        {if @state.accessGranted
-          <h2 className='early'>Early Access</h2>
-        }
-        <h2>Event Ticket</h2>
+        <img src={@state.ticketImg} />
+        <a className='btn block' onClick={@onPrint}>
+          Print
+        </a><br />
+        <a onClick={@download} className='btn block' download='ticket.png'>
+          Save
+        </a>
       </section>
     </div>

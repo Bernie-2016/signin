@@ -6,6 +6,7 @@ module.exports = Fluxxor.createStore
     @id = null
     @title = null
     @earlyAccess = null
+    @color = null
     @fields = []
     @loaded = false
     @error = false
@@ -25,6 +26,7 @@ module.exports = Fluxxor.createStore
       @id = response.id
       @title = response.title
       @earlyAccess = response.early_access
+      @color = response.color
       @fields = response.questions
       @loaded = true
     @emit('change')
