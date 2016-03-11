@@ -101,7 +101,8 @@ module.exports = React.createClass
     data.extra_fields = [event_id: @state.id, questions: extraFields]
 
     accessGranted = false
-    if @state.earlyAccess
+    selectCities = _.find(@state.fields, type: 'select')
+    if @state.earlyAccess && (_.find(@state.fieldValues, id: parseInt(selectCities.id)) || {}).value
       for field in @state.fields when field.type is 'gotv'
         accessGranted = true if (_.find(@state.fieldValues, id: parseInt(field.id)) || {}).value
 
@@ -172,6 +173,7 @@ module.exports = React.createClass
     e.target.href = @state.ticketImg
 
   render: ->
+    selectCities = _.find(@state.fields, type: 'select')
     <div>
       <section className={"form #{'hidden' unless @state.view is 'FORM'}"}>
         <h2>
@@ -226,8 +228,14 @@ module.exports = React.createClass
                 <h2>Early Access</h2>
                 <hr />
                 <p className='early-access'>
-                  Want early access to the event? Just sign up for one or more volunteer shifts to help get out the vote for Bernie!
+                  Want early access to the event? Just select your city and sign up for one or more volunteer shifts to help get out the vote for Bernie!
                 </p>
+                <Input type='select' data-id={selectCities.id} onChange={@setField} value={(_.find(@state.fieldValues, id: parseInt(field.id)) || {}).value}>
+                  <option key='default' value={null}>Select your city...</option>
+                  {for city in selectCities.choices
+                    <option key={city} value={city}>{city}</option>
+                  }
+                </Input>
                 {for field in @state.fields when field.type is 'gotv'
                   <div className='checkboxgroup' key={field.id}>
                     <Input type='checkbox' data-id={field.id} onChange={@setCheck} checked={(_.find(@state.fieldValues, id: parseInt(field.id)) || {}).value} />

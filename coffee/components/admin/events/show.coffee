@@ -70,7 +70,7 @@ module.exports = React.createClass
       else
         <h4>Fields:</h4>
       }
-      {for field in @state.fields when field.type isnt 'gotv'
+      {for field in @state.fields when field.type isnt 'gotv' && field.type isnt 'select'
         <div key={field.id}>
           <p>
             <strong>Title:</strong> {field.title}
@@ -84,6 +84,7 @@ module.exports = React.createClass
       {if @state.earlyAccess
         <div>
           <h4>Early Access Shifts:</h4>
+          <h5>Staging Cities: {((_.find(@state.fields, type: 'select') || {}).choices || []).join(', ')}</h5>
           {for field in @state.fields when field.type is 'gotv'
             <div key={field.id}>
               <p>

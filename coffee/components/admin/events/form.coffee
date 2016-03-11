@@ -20,6 +20,16 @@ module.exports = React.createClass
     questions[index].type = e.target.value
     @props.set(questions: questions)
 
+  setStagingCities: (e) ->
+    questions = @props.questions
+    question = _.find(questions, type: 'select')
+    if question
+      question.choices = e.target.value.split(',')
+      @props.set(questions: questions)
+    else
+      question = { title: 'Staging City', type: 'select', choices: e.target.value.split(',') }
+      @props.set(questions: questions.concat(question))
+
   addQuestion: (e) ->
     e.preventDefault()
     questions = @props.questions
@@ -40,15 +50,15 @@ module.exports = React.createClass
     @props.set(questions: questions)
 
   render: ->
+    stagingCities = _.find(@props.questions, type: 'select') || { title: 'Staging City', type: 'select', choices: [] }
     <form onSubmit={@props.submit}>
-      
       <Input type='text' label='Name' placeholder='Event name' value={@props.name} onChange={ (e) => @props.set(name: e.target.value) } />
       <label className='control-label'>Date</label>
       <DatePicker inputFormat='MM/DD/YYYY' format='YYYY-MM-DD' dateTime={@props.date} onChange={ (value) => @props.set(date: moment(value)) } />
       <br />
       <Input type='text' label='Slug' placeholder='Event slug' value={@props.slug} onChange={ (e) => @props.set(slug: e.target.value) } addonBefore='https://signin.berniesanders.com/' />
       <label className='control-label'>Custom Fields</label>
-      {for question, index in @props.questions when question.type isnt 'gotv'
+      {for question, index in @props.questions when question.type isnt 'gotv' && question.type isnt 'select'
         <Row key={question.id || question.rid}>
           <Col xs={5}>
             <Input type='text' label='Field title' placeholder='Field title' value={question.title} data-index={index} onChange={@setQuestionTitle} />
@@ -78,6 +88,7 @@ module.exports = React.createClass
             <option value='#45D363'>Green</option>
             <option value='#551A8B'>Purple</option>
           </Input>
+          <Input type='text' label='Staging Cities (comma-separated)' onChange={@setStagingCities} value={stagingCities.choices.join(',')} />
           {for question, index in @props.questions when question.type is 'gotv'
             <Row key={question.id || question.rid}>
               <Col xs={10}>
