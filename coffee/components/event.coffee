@@ -96,7 +96,7 @@ module.exports = React.createClass
       can_text: @state.canText
       extra_fields: JSON.stringify([event_id: @state.id, questions: extraFields])
 
-    Client.post('/signups', null, signups: [data])
+    # Client.post('/signups', null, signups: [data])
 
     data.extra_fields = [event_id: @state.id, questions: extraFields]
 
