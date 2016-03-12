@@ -118,7 +118,7 @@ module.exports = React.createClass
       'extra_fields'
     ]
     string = JSON.stringify(allFields.map( (key) -> data[key] )).slice(1, -1)
-    string = qr(string, fill: '#147FD7')
+    string = qr(string, fill: '#147FD7', mode: 'octet')
 
     canvas = document.createElement('canvas')
     canvas.width = 300
