@@ -101,8 +101,9 @@ module.exports = React.createClass
     data.extra_fields = [event_id: @state.id, questions: extraFields]
 
     accessGranted = false
-    selectCities = _.find(@state.fields, type: 'select')
-    if @state.earlyAccess && (_.find(@state.fieldValues, id: parseInt(selectCities.id)) || {}).value
+    selectCities = _.find(@state.fields, type: 'select') || {}
+    selectedCity = _.find(@state.fieldValues, id: parseInt(selectCities.id)) || {}
+    if @state.earlyAccess && selectedCity.value && selectedCity.value isnt 'Select your city...'
       for field in @state.fields when field.type is 'gotv'
         accessGranted = true if (_.find(@state.fieldValues, id: parseInt(field.id)) || {}).value
 
@@ -173,7 +174,8 @@ module.exports = React.createClass
     e.target.href = @state.ticketImg
 
   render: ->
-    selectCities = _.find(@state.fields, type: 'select')
+    selectCities = _.find(@state.fields, type: 'select') || {}
+    selectedCity = _.find(@state.fieldValues, id: parseInt(selectCities.id)) || {}
     <div>
       <section className={"form #{'hidden' unless @state.view is 'FORM'}"}>
         <h2>
@@ -216,7 +218,7 @@ module.exports = React.createClass
             {for field in @state.fields when field.type is 'checkbox'
               <div className='checkboxgroup' key={field.id}>
                 <Input type='checkbox' data-id={field.id} onChange={@setCheck} checked={(_.find(@state.fieldValues, id: parseInt(field.id)) || {}).value} />
-                <label className='checkbox-label'>
+                <label className='checkbox-label' htmlFor={field.id}>
                   {field.title}
                 </label>
               </div>
@@ -230,18 +232,23 @@ module.exports = React.createClass
                 <p className='early-access'>
                   Want to get in early to today’s event? Sign up for a shift knocking on doors to help get out the vote for Bernie and we'll give you early access.
                 </p>
-                <Input type='select' data-id={selectCities.id} onChange={@setField} value={(_.find(@state.fieldValues, id: parseInt(field.id)) || {}).value}>
-                  <option key='default' value={null}>Select your city...</option>
+                <Input type='select' data-id={selectCities.id} onChange={@setField} value={selectedCity.value}>
+                  <option key='default' value='Select your city...'>Select your city...</option>
                   {for city in selectCities.choices
                     <option key={city} value={city}>{city}</option>
                   }
                 </Input>
-                {for field in @state.fields when field.type is 'gotv'
-                  <div className='checkboxgroup' key={field.id}>
-                    <Input type='checkbox' data-id={field.id} onChange={@setCheck} checked={(_.find(@state.fieldValues, id: parseInt(field.id)) || {}).value} />
-                    <label className='checkbox-label'>
-                      {field.title}
-                    </label>
+
+                {if selectedCity.value && selectedCity.value isnt 'Select your city...'
+                  <div>
+                    {for field in @state.fields when field.type is 'gotv'
+                      <div className='checkboxgroup' key={field.id}>
+                        <Input type='checkbox' id={field.id} data-id={field.id} onChange={@setCheck} checked={(_.find(@state.fieldValues, id: parseInt(field.id)) || {}).value} />
+                        <label className='checkbox-label' htmlFor={field.id}>
+                          {field.title}
+                        </label>
+                      </div>
+                    }
                   </div>
                 }
                 <br />
