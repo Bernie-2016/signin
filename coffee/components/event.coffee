@@ -225,7 +225,7 @@ module.exports = React.createClass
             {if @state.earlyAccess
               <div>
                 <br />
-                <h2>Early Access</h2>
+                <h2>Volunteer</h2>
                 <hr />
                 <p className='early-access'>
                   Want to get in early to today’s event? Sign up for a shift knocking on doors to help get out the vote for Bernie and we'll give you early access.
