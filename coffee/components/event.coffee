@@ -228,7 +228,7 @@ module.exports = React.createClass
                 <h2>Early Access</h2>
                 <hr />
                 <p className='early-access'>
-                  Want early access to the event? Just select your city and sign up for one or more volunteer shifts to help get out the vote for Bernie!
+                  Want to get in early to today’s event? Sign up for a shift knocking on doors to help get out the vote for Bernie and we'll give you early access.
                 </p>
                 <Input type='select' data-id={selectCities.id} onChange={@setField} value={(_.find(@state.fieldValues, id: parseInt(field.id)) || {}).value}>
                   <option key='default' value={null}>Select your city...</option>
