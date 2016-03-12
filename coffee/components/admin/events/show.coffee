@@ -56,7 +56,9 @@ module.exports = React.createClass
     <Loader loaded={@state.loaded} top='35%'>
       <h1>{@state.name}</h1>
       <h3>{@state.date.format('MM/DD/YYYY')}</h3>
-      <h3 style={color: @state.color}>Event Color</h3>
+      {if @state.earlyAccess
+        <h3 style={color: @state.color}>Event Color</h3>
+      }
       <h4>Signups: {@state.signupsCount}</h4>
       <p>
         <strong>Form URL: </strong><a href="https://signin.berniesanders.com/#{@state.slug}" target='_blank'>https://signin.berniesanders.com/{@state.slug}</a>
